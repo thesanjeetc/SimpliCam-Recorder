@@ -21,6 +21,10 @@ else:
     with open('client_secrets.json', 'w') as f:
         json.dump(SECRETS, f)
 
+    CRED = json.loads(os.getenv('CRED'))
+    with open('creds.txt', 'w') as f:
+        json.dump(CRED, f)
+
 USERNAME = os.getenv('SIMPLI_USERNAME')
 PASSWORD = os.getenv('SIMPLI_PASSWORD')
 
