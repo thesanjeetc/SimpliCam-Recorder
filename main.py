@@ -9,9 +9,13 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+
+# from dotenv import load_dotenv
+# load_dotenv()
 
 if 'DYNO' not in os.environ:
     from dotenv import load_dotenv
@@ -35,7 +39,7 @@ FORMAT = os.getenv('FORMAT')
 TIMEOUT = int(os.getenv('TIMEOUT'))
 DURATION = int(os.getenv('DURATION'))
 
-CHROME_PATH = os.getenv('google-chrome')
+CHROME_PATH = os.getenv('CHROME_PATH')
 DRIVER_PATH = os.getenv('DRIVER_PATH')
 
 with open("record.js", "r") as file:
@@ -64,14 +68,14 @@ def browserInit():
     prefs = {'download.default_directory': cwd +
              "\\", 'download.prompt_for_download': False}
 
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
 
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
 
     if 'DYNO' in os.environ:
         chrome_options.add_experimental_option('prefs', prefs)
-        chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
@@ -79,11 +83,11 @@ def browserInit():
         chrome_options.add_experimental_option(
             "debuggerAddress", "127.0.0.1:9222")
 
-    chrome_options.binary_location = CHROME_PATH
+    chrome_options.binary_location = str(CHROME_PATH)
 
     chrome_driver = DRIVER_PATH
     driver = webdriver.Chrome(
-        chrome_driver, chrome_options=chrome_options, desired_capabilities=caps)
+        executable_path=str(DRIVER_PATH), chrome_options=chrome_options, desired_capabilities=caps)
     driver.set_script_timeout(999)
 
     return driver
@@ -261,6 +265,7 @@ if __name__ == "__main__":
 
     print("[INITIALISING BROWSER]")
     driver = browserInit()
+    login()
 
     try:
         main()
