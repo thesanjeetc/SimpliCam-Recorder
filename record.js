@@ -14,17 +14,6 @@ function handleStop(event) {
   blobToBase64(superBuffer, (abc) => {
     callback(abc);
   });
-
-  // const a = document.createElement("a");
-  // a.style.display = "none";
-  // a.href = url;
-  // a.download = "recording.mkv";
-  // document.body.appendChild(a);
-  // a.click();
-  // setTimeout(() => {
-  //   document.body.removeChild(a);
-  //   window.URL.revokeObjectURL(url);
-  // }, 100);
 }
 
 function startRecording(callback) {
@@ -71,7 +60,4 @@ callback = arguments[1];
 startRecording();
 setTimeout(() => {
   stopRecording();
-  // setTimeout(() => {
-  //   arguments[1](1);
-  // }, 5000);
-}, 10000);
+}, arguments[0]);
