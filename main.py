@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime
 import time
+import base64
 
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -225,7 +226,10 @@ def recordMotion():
     filename = datetime.now().strftime(FORMAT)
 
     print("[CAPTURING STREAM]")
-    driver.execute_async_script(RECORDJS, DURATION*1000)
+    result = driver.execute_async_script(RECORDJS, DURATION*1000)
+    fileContent = base64.b64decode(result)
+    with open("recording.mkv", 'wb') as file:
+        file.write(fileContent)
 
     print("[CONVERTING TO MP4]")
     convertToMP4(filename)

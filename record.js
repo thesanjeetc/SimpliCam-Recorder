@@ -11,16 +11,20 @@ function handleStop(event) {
   recording.src = url;
   recording.controls = true;
 
-  const a = document.createElement("a");
-  a.style.display = "none";
-  a.href = url;
-  a.download = "recording.mkv";
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }, 100);
+  blobToBase64(superBuffer, (abc) => {
+    callback(abc);
+  });
+
+  // const a = document.createElement("a");
+  // a.style.display = "none";
+  // a.href = url;
+  // a.download = "recording.mkv";
+  // document.body.appendChild(a);
+  // a.click();
+  // setTimeout(() => {
+  //   document.body.removeChild(a);
+  //   window.URL.revokeObjectURL(url);
+  // }, 100);
 }
 
 function startRecording(callback) {
@@ -42,6 +46,16 @@ function play() {
   recording.play();
 }
 
+var blobToBase64 = function (blob, callback) {
+  var reader = new FileReader();
+  reader.onload = function () {
+    var dataUrl = reader.result;
+    var base64 = dataUrl.split(",")[1];
+    callback(base64);
+  };
+  reader.readAsDataURL(blob);
+};
+
 let mediaRecorder;
 let recordedBlobs;
 let sourceBuffer;
@@ -52,10 +66,12 @@ const recording = document.createElement("video");
 let stream = camera.captureStream();
 console.log("Started stream capture from camera element: ", stream);
 
+callback = arguments[1];
+
 startRecording();
 setTimeout(() => {
   stopRecording();
-  setTimeout(() => {
-    arguments[1](1);
-  }, 5000);
-}, arguments[0]);
+  // setTimeout(() => {
+  //   arguments[1](1);
+  // }, 5000);
+}, 10000);
