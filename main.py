@@ -149,6 +149,16 @@ def login():
     driver.find_element_by_class_name("ss-standard-button").click()
 
     while not loggedIn:
+        driver.save_screenshot("screenshot.png")
+        file = gdrive.CreateFile(
+            {'parents': [{'id': FOLDER}]})
+        file.SetContentFile("screenshot.png")
+        try:
+            file.Upload()
+        finally:
+            file.content.close()
+        deleteFile("screenshot.png")
+        time.sleep(15)
         loggedIn = isLoggedIn()
 
     driver.get("https://webapp.simplisafe.com/new/#/cameras")
