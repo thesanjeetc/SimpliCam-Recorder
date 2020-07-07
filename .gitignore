@@ -1,0 +1,9 @@
+.env
+.env.example
+.env.local
+.env.staging
+
+client_secrets.json
+creds.txt
+
+/.vscode
