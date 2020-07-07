@@ -35,7 +35,7 @@ FORMAT = os.getenv('FORMAT')
 TIMEOUT = int(os.getenv('TIMEOUT'))
 DURATION = int(os.getenv('DURATION'))
 
-CHROME_PATH = os.getenv('CHROME_PATH')
+CHROME_PATH = os.getenv('google-chrome')
 DRIVER_PATH = os.getenv('DRIVER_PATH')
 
 with open("record.js", "r") as file:
