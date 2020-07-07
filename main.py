@@ -79,11 +79,10 @@ def browserInit():
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
+        chrome_options.binary_location = str(CHROME_PATH)
     else:
         chrome_options.add_experimental_option(
             "debuggerAddress", "127.0.0.1:9222")
-
-    chrome_options.binary_location = str(CHROME_PATH)
 
     chrome_driver = DRIVER_PATH
     driver = webdriver.Chrome(
