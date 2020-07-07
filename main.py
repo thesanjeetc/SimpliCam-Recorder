@@ -181,12 +181,12 @@ def play():
     return True
 
 
-def convertToMP4(filename):
-    command = "ffmpeg -i recording.mkv -c copy -c:a aac -movflags +faststart " + \
-        str(filename) + ".mp4"
-    os.system(command)
-    deleteFile("recording.mkv")
-    return filename
+# def convertToMP4(filename):
+#     command = "ffmpeg -i recording.mkv -c copy -c:a aac -movflags +faststart " + \
+#         str(filename) + ".mp4"
+#     os.system(command)
+#     deleteFile("recording.mkv")
+#     return filename
 
 
 def getFolderID():
