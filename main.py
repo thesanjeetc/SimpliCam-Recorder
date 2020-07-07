@@ -212,14 +212,14 @@ def upload(filename):
     folderID = getFolderID()
     file = gdrive.CreateFile(
         {'parents': [{'id': folderID}]})
-    file.SetContentFile(filename + ".mp4")
+    file.SetContentFile(filename + ".mkv")
 
     try:
         file.Upload()
     finally:
         file.content.close()
 
-    deleteFile(filename + ".mp4")
+    deleteFile(filename + ".mkv")
 
 
 def recordMotion():
@@ -229,11 +229,11 @@ def recordMotion():
     print("[CAPTURING STREAM]")
     result = driver.execute_async_script(RECORDJS, DURATION*1000)
     fileContent = base64.b64decode(result)
-    with open("recording.mkv", 'wb') as file:
+    with open(filename+".mkv", 'wb') as file:
         file.write(fileContent)
 
-    print("[CONVERTING TO MP4]")
-    convertToMP4(filename)
+    # print("[CONVERTING TO MP4]")
+    # convertToMP4(filename)
 
     print("[UPLOADING TO DRIVE]")
     upload(filename)
@@ -263,9 +263,6 @@ def main():
 
 
 if __name__ == "__main__":
-    os.system("apt-get install ffmpeg")
-    time.sleep(60)
-
     print("[GOOGLE DRIVE AUTH]")
     gdrive = driveAuth()
 
