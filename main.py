@@ -195,6 +195,7 @@ def getFolderID():
         {"q": "mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
 
     for folder in folders:
+        print(folder['title'])
         if folder['title'] == folderName:
             return folder['id']
 
@@ -262,6 +263,9 @@ def main():
 
 
 if __name__ == "__main__":
+    os.system("apt-get install ffmpeg")
+    time.sleep(60)
+
     print("[GOOGLE DRIVE AUTH]")
     gdrive = driveAuth()
 
