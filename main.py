@@ -68,6 +68,8 @@ def browserInit():
     prefs = {'download.default_directory': cwd +
              "\\", 'download.prompt_for_download': False}
 
+    print(cwd)
+
     chrome_options = Options()
 
     caps = DesiredCapabilities.CHROME
