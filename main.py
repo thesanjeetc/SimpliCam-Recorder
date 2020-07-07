@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 import time
 import base64
+import pytz
 
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -62,20 +63,12 @@ def driveAuth():
 
 
 def browserInit():
-    cwd = os.path.dirname(os.path.abspath(__file__))
-    prefs = {'download.default_directory': cwd +
-             "\\", 'download.prompt_for_download': False}
-
-    print(cwd)
-
     chrome_options = Options()
 
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
 
     if 'DYNO' in os.environ:
-        chrome_options.add_experimental_option('prefs', prefs)
-        # chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
@@ -195,7 +188,6 @@ def getFolderID():
         {"q": "mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
 
     for folder in folders:
-        print(folder['title'])
         if folder['title'] == folderName:
             return folder['id']
 
